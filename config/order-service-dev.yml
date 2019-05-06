@@ -2,6 +2,38 @@ spring:
   application:
     name: order-service
     
-server:
+#server:
+ # port: 8201
   
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka
+  
+#feign:   #此处省略这几行代码，使用默认配置（默认即没有开启hystrix）
+ # hystrix:
+   # enabled: true  
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+        
+---
+spring:
+  profiles: order1
+  
+server:
+  port: 8201
+  
+---
+spring:
+  profiles: order2
+  
+server:
+  port: 8202
+  
+
+
 
