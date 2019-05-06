@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: zuul
+    
+server:
+  port: 3001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka
+
+zuul:
+  retryable: true
+  #zuul 会过滤敏感的cookie，即http 协议头，默认过滤以下协议头：Cookie,Set-Cookie，Authorization。可以设置 zuul 不过滤这些协议头
+  sensitive-headers: 
+  
+#zuul:
+#  routes:  当请求zuul服务器时，zuul服务器会转发请求，则会转发到下面多个微服务框架中执行业务逻辑
+#    item-service: /item-service/**   该几个微服务可省略不写（路径缺省配置）
+#    user-service: /user-service/**
+#    order-service: /order-service/**
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+  
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500
+            
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream   #暴露监控端点
