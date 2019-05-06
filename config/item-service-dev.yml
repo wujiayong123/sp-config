@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: item-service
+    
+#server:
+#  port: 8001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka
+  #下面代码意思为使用ip地址注册。（在eureka1:2001中显示出自己服务的）
+  instance:
+    prefer-ip-address: true     #使用ip地址注册，而不是主机名
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}  #注册后在列表中显示的名称
+  
+      
+---
+spring:
+  profiles: item1
+  
+server:
+  port: 8001
+---
+spring:
+  profiles: item2
+
+server:
+  port: 8002
+  
+
+   
+   
+   
+
